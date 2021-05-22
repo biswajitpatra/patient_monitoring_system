@@ -16,6 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+# For customizing admin panel
+admin.site.site_header = 'Patient Monitor System'                    
+admin.site.index_title = 'Database'                 
+admin.site.site_title = 'Admin Panel'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
