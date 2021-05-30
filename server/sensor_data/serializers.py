@@ -33,7 +33,7 @@ class SensorDataSerializer(serializers.ModelSerializer):
         sensor_data = SensorData.objects.create(**validated_data)
         for record_data in records_data:
             record = Record.objects.create(sensor_data=sensor_data, **record_data)
-            
+
             if not (
                 record.measurement_type.min_range
                 <= record.value
@@ -43,7 +43,11 @@ class SensorDataSerializer(serializers.ModelSerializer):
                     subject="ALERT FOR PATIENT",
                     from_email=None,
                     message=f"{sensor_data.patient.user.first_name} has abnormal levels of {record.measurement_type.type} i.e, {record.value}",
-                    recipient_list=list(sensor_data.patient.doctors.values_list("user__email",flat=True)),
+                    recipient_list=list(
+                        sensor_data.patient.doctors.values_list(
+                            "user__email", flat=True
+                        )
+                    ),
                 )
 
         return sensor_data

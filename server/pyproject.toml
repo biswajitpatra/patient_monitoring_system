@@ -13,6 +13,7 @@ whitenoise = "^5.2.0"
 psycopg2-binary = "^2.8.6"
 djangorestframework = "^3.12.4"
 django-filter = "^2.4.0"
+django-crispy-forms = "^1.11.2"
 
 [tool.poetry.dev-dependencies]
 
