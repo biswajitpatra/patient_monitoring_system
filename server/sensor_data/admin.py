@@ -1,7 +1,12 @@
 from django.contrib import admin
 
-from sensor_data.models import MeasurementType, SingleRecord, SensorData
+from sensor_data.models import MeasurementType, Record, SensorData
 
 admin.site.register(MeasurementType)
-admin.site.register(SingleRecord)
-admin.site.register(SensorData)
+
+class RecordInline(admin.TabularInline):
+    model = Record
+class SensorDataAdmin(admin.ModelAdmin):
+    inlines = (RecordInline, )
+
+admin.site.register(SensorData, SensorDataAdmin)

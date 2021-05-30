@@ -14,7 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+from rest_framework.authtoken import views
+from rest_framework import routers
+
+from sensor_data.views import HelloView, RecordViewSet, SensorDataViewSet, MeasurementTypeViewSet
+
+router = routers.SimpleRouter()
+router.register("sensor-data", SensorDataViewSet)
+router.register("measurements", MeasurementTypeViewSet)
+router.register("records", RecordViewSet)
 
 # For customizing admin panel
 admin.site.site_header = 'Patient Monitor System'                    
@@ -23,4 +33,7 @@ admin.site.site_title = 'Admin Panel'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('hello/', HelloView.as_view(), name='hello'),
+    path('api-token/', views.obtain_auth_token),
+    path('api/', include(router.urls)),
 ]

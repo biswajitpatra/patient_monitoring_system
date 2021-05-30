@@ -1,4 +1,7 @@
 {
     "python.autoComplete.extraPaths": ["./server"],
-    "python.analysis.extraPaths": ["./server"]
+    "python.analysis.extraPaths": [
+        "./server"
+    ],
+    "python.formatting.provider": "black"
 }

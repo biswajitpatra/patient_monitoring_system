@@ -10,14 +10,14 @@ WORKDIR /server
 # set environment variables  
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-
-# install dependencies  
-COPY pyproject.toml .
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
 
 RUN pip3 install poetry
 RUN poetry config virtualenvs.create false
-RUN poetry install --no-dev
 
+# install dependencies  
+COPY pyproject.toml .
+RUN poetry install --no-dev
 
 # Copy all files
 COPY . .

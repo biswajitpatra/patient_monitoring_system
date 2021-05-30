@@ -5,7 +5,10 @@ from django.contrib.auth.models import User
 
 from users.models import Patient, Doctor
 
-admin.site.register(Patient)
+class PatientAdmin(admin.ModelAdmin):
+    filter_horizontal = ('doctors',)
+
+admin.site.register(Patient, PatientAdmin)
 admin.site.register(Doctor)
 
 class UserAdmin(BaseUserAdmin):

@@ -12,8 +12,8 @@ services:
         POSTGRES_PASSWORD: postgres
     ports:
         - "5432:5432"
-  api_server:
-    container_name: api_server
+  server:
+    container_name: server
     build: ./server
     command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000" 
     volumes:
@@ -23,5 +23,18 @@ services:
     environment:
         DEBUG: 1
         PORT: 8000
+    env_file: 
+      - ./server/.env
     depends_on:
       - db
+  fake_sensor:
+    container_name: fake_sensor
+    image: nyurik/alpine-python3-requests
+    command: python3 fake_data_generator.py
+    working_dir: /fake_sensor
+    environment: 
+        START: 0
+    volumes:
+      - ./fake_sensor:/fake_sensor
+    depends_on:
+      - server
